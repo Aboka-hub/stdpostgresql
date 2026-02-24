@@ -1,5 +1,7 @@
 package com.bcnd.stdpostsql.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,8 +28,15 @@ public class Course {
     private Integer credits;
 
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Lesson> lessons = new ArrayList<>();
+
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+        lesson.setCourse(this);
+    }
 }

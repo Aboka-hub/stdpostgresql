@@ -1,7 +1,7 @@
 package com.bcnd.stdpostsql.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -25,5 +25,6 @@ public class Lesson {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonBackReference
     private Course course;
 }

@@ -1,5 +1,7 @@
 package com.bcnd.stdpostsql.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -36,6 +38,7 @@ public class Student {
     private String email;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private StudentProfile studentProfile;
 
     @ManyToMany
@@ -44,5 +47,11 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
+    @JsonIgnore
     private List<Course> courses = new ArrayList<>();
+
+    public void addCourse(Course course) {
+        this.courses.add(course);
+        course.getStudents().add(this);
+    }
 }

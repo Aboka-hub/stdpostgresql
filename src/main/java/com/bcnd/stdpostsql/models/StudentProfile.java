@@ -1,5 +1,6 @@
 package com.bcnd.stdpostsql.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,5 +30,6 @@ public class StudentProfile  {
 
     @OneToOne
     @JoinColumn(name = "student_id", unique = true)
+    @JsonIgnore
     private Student student;
 }

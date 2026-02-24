@@ -5,9 +5,8 @@ import com.bcnd.stdpostsql.models.Student;
 import java.util.List;
 
 public interface StudentService {
-    public Student create(Student student);
-    public Student getById(Long id);
-    public List<Student> getAll();
-    public Student update(Long id, Student student);
-    public void deleteById(Long id);
+    Student getById(Long id);
+    Student create(Student student);
+    Student enroll(Long studentId, Long courseId);
+    void deleteById(Long id);
 }

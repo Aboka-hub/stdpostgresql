@@ -1,44 +1,37 @@
 package com.bcnd.stdpostsql.service.impl;
 
+import com.bcnd.stdpostsql.models.Course;
 import com.bcnd.stdpostsql.models.Student;
+import com.bcnd.stdpostsql.repository.CourseRepository;
 import com.bcnd.stdpostsql.repository.StudentRepository;
 import com.bcnd.stdpostsql.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class StudentServiceImpl implements StudentService {
+
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public Student create(Student student) {
         return studentRepository.save(student);
     }
-
     @Override
     public Student getById(Long id) {
         return studentRepository.findById(id).orElse(null);
     }
-
     @Override
-    public List<Student> getAll() {
-        return studentRepository.findAll();
-    }
+    public Student enroll(Long studentId, Long courseId) {
+        Student student = studentRepository.findById(studentId).orElseThrow();
+        Course course = courseRepository.findById(courseId).orElseThrow();
 
-    @Override
-    public Student update(Long id, Student student) {
-        Student s = studentRepository.findById(id).orElse(null);
-        if (s != null) {
-            s.setFirstName(student.getFirstName());
-            s.setLastName(student.getLastName());
-            s.setEmail(student.getEmail());
-            s.setCourses(student.getCourses());
-            studentRepository.save(s);
-        }
-        return s;
+        student.addCourse(course);
+        return student;
     }
 
     @Override
