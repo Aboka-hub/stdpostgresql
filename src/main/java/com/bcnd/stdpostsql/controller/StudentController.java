@@ -1,9 +1,8 @@
 package com.bcnd.stdpostsql.controller;
 
 import com.bcnd.stdpostsql.models.Student;
-import com.bcnd.stdpostsql.service.StudentService;
+import com.bcnd.stdpostsql.service.impl.StudentServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentController {
 
-    private final StudentService studentService;
+    private final StudentServiceImpl studentService;
 
     @PostMapping
     public Student save(@RequestBody Student student) {
